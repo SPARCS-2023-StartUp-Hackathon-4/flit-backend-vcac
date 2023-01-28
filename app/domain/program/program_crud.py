@@ -63,7 +63,7 @@ def update_program(db: Session,
 
 def delete_program(db: Session,
                    title: str,
-                   vcac: VCAC | None = None):
+                   vcac: VCAC):
     db_program = db.query(Program).filter(
         (Program.title == title) & (Program.vcac_id == vcac.id)).first()
 
