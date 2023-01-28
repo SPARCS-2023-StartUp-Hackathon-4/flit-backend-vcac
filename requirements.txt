@@ -1,0 +1,7 @@
+alembic==1.8.1
+fastapi==0.85.1
+passlib
+python-jose[cryptography]
+python-multipart
+pydantic[email]
+uvicorn
