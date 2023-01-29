@@ -1,3 +1,4 @@
+import sqlalchemy
 from sqlalchemy.orm import Session
 from datetime import datetime
 
@@ -34,7 +35,7 @@ def read_program(db: Session,
 
 
 def read_program_list(db: Session):
-    program = db.query(Program).order_by(Program.create_date).all()
+    program = db.query(Program).order_by(sqlalchemy.desc(Program.create_date)).all()
     return program
 
 
