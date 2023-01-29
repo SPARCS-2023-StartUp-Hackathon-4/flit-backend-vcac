@@ -34,7 +34,7 @@ def read_program(db: Session,
 
 
 def read_program_list(db: Session):
-    program = db.query(Program).all()
+    program = db.query(Program).order_by(Program.create_date).all()
     return program
 
 

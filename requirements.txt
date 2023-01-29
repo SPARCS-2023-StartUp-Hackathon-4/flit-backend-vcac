@@ -4,3 +4,4 @@ passlib
 python-jose[cryptography]
 pydantic[email]
 uvicorn
+python-multipart

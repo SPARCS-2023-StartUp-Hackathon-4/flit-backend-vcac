@@ -19,7 +19,7 @@ columns = ["title", "url", "category", "organization", "subject",
 storage = []
 counter = 0
 
-for page in range(1, 2):
+for page in range(1, 5):
     pages = requests.post(
         main.format(page)
     )
@@ -64,22 +64,35 @@ for page in range(1, 2):
                 apply_method = "N/A"
 
             storage.append(
-                [title, url, category, organization, subject, apply_period, apply_method, content, inquiries, age]
+                [title, detail.format(url, page), category, organization, subject, apply_period, apply_method, content, inquiries, age]
             )
 
             counter += 1
+            print(counter)
             time.sleep(0.5)
 
 result = pd.DataFrame(
     storage, columns=columns
 )
 
+#
+# Login
+#
+
+token = requests.post(
+    url="http://ec2-43-201-42-19.ap-northeast-2.compute.amazonaws.com:8080/vcac/login",
+    data={
+        'username': 'testvc',
+        'password': 'aa'
+    }
+).content
+
 
 for idx, sample in result.iterrows():
     print(str(idx), ProgramBase.parse_obj(sample).dict())
-    requests.post("http://127.0.0.1:8001/program/",
+    requests.post("http://ec2-43-201-42-19.ap-northeast-2.compute.amazonaws.com:8080/program/",
                   json=ProgramBase.parse_obj(sample).dict(),
-                  headers={'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dmMiLCJleHAiOjE2NzQ5ODgwNjR9.p0R6Inja29qRvGQrLUajIakowyNHhmyDR65n_FdyeJc"}
+                  headers={'Authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dmMiLCJleHAiOjE2NzUwNDE1OTJ9.-u66482-DaAhW8f-mMX40S2oR9MklMnvMY3NUf0nCLM"}
                   )
 
 
